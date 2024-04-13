@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Help</title>
-    <!-- Include Tailwind CSS -->
+
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=ArabuCVZvdTAx3PETb_PzgYLcwLRGNxh4uduVpUZWKMkU5giVr7WZG9arEXnUvd_"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Include custom CSS for popup -->
+
     <style>
-        /* Popup */
         .popup {
             display: none;
             position: fixed;
@@ -22,66 +22,121 @@
             border-radius: 10px;
             z-index: 1000;
         }
+
+        #map {
+            width: 100%;
+            height: 200px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
     </style>
 </head>
-
 <body class="bg-gray-100">
-    <div class="container mx-auto py-16">
+    <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center mb-8">Request Help</h1>
-        <!-- Help Request Form -->
+
         <form id="help-form" action="save_data.php" method="POST" class="max-w-lg mx-auto">
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" required class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
             </div>
+
             <div class="mb-4">
                 <label for="age" class="block text-gray-700 font-semibold mb-2">Age</label>
                 <input type="number" id="age" name="age" placeholder="Enter your age" required class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
             </div>
+
             <div class="mb-4">
                 <label for="previous-location" class="block text-gray-700 font-semibold mb-2">Previous Location</label>
                 <input type="text" id="previous-location" name="previous_location" placeholder="Where you lived before" required class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
             </div>
+
             <div class="mb-4">
                 <label for="current-location" class="block text-gray-700 font-semibold mb-2">Current Location</label>
                 <input type="text" id="current-location" name="current_location" placeholder="Where you are now" required class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
             </div>
+
+            <div class="mb-4">
+                <label for="current-coordinates" class="block text-gray-700 font-semibold mb-2">Current Coordinates</label>
+                <input type="text" id="current-coordinates" name="current_coordinates" placeholder="Current Coordinates" required class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
+            </div>
+
+            <div id="map" class="mt-4"></div>
+
             <div class="mb-4">
                 <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number (Optional)</label>
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" class="w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none">
             </div>
+
             <button type="submit" class="bg-blue-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-600">Submit Request</button>
         </form>
-        <!-- Successful Indication Popup -->
+
         <div id="success-popup" class="popup">
             <p>Request submitted successfully!</p>
         </div>
     </div>
 
-    <!-- Include custom JavaScript for popup -->
     <script>
-        // Function to show the success popup
-        function showSuccessPopup() {
-            var popup = document.getElementById("success-popup");
-            popup.style.display = "block";
-            // Hide the popup after 3 seconds
-            setTimeout(function() {
-                popup.style.display = "none";
-            }, 3000);
+        function initMap() {
+            var map = new Microsoft.Maps.Map(document.getElementById('map'), {
+                credentials: 'ArabuCVZvdTAx3PETb_PzgYLcwLRGNxh4uduVpUZWKMkU5giVr7WZG9arEXnUvd_',
+                center: new Microsoft.Maps.Location(30.712229759261206, 75.50832207192508),
+                zoom: 7,
+                mapTypeId: Microsoft.Maps.MapTypeId.aerial
+            });
+
+            var userLocation;
+
+            function pinUserLocation(location) {
+                map.entities.clear();
+
+                var pin = new Microsoft.Maps.Pushpin(location, {
+                    color: 'red'
+                });
+                map.entities.push(pin);
+
+                document.getElementById('current-coordinates').value = location.latitude + ', ' + location.longitude;
+
+                // Update the current latitude and longitude input fields
+                document.getElementById('current_latitude').value = location.latitude;
+                document.getElementById('current_longitude').value = location.longitude;
+
+                Microsoft.Maps.Search.reverseGeocode(location, map.getZoom(), function (result) {
+                    if (result && result.results && result.results.length > 0) {
+                        var currentLocation = result.results[0].address.formattedAddress;
+
+                        document.getElementById('current-location').value = currentLocation;
+                    }
+                });
+            }
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                userLocation = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+
+                pinUserLocation(userLocation);
+
+                map.setView({ center: userLocation, zoom: 15 });
+            });
+
+            Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
+                var location = e.location;
+
+                pinUserLocation(location);
+            });
+
+            document.getElementById('get-current-location').addEventListener('click', function () {
+                if (userLocation) {
+                    map.setView({ center: userLocation, zoom: 15 });
+
+                    pinUserLocation(userLocation);
+                }
+            });
         }
-
-        // Add event listener to the form submission
-        document.getElementById("help-form").addEventListener("submit", function(event) {
-            // Prevent form submission
-            event.preventDefault();
-            // Show the success popup
-            showSuccessPopup();
-            // Submit the form after 3 seconds
-            setTimeout(function() {
-                document.getElementById("help-form").submit();
-            }, 1000);
-        });
     </script>
-</body>
 
+
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=initMap" async defer></script>
+</body>
 </html>

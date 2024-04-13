@@ -1,10 +1,9 @@
-Name: Alice Johnson, Age: 32, Previous Location: New York, Current Location: Los Angeles, Phone: 1234567890
-Name: Bob Smith, Age: 45, Previous Location: Chicago, Current Location: Miami, Phone: 9876543210
-Name: Emma Davis, Age: 27, Previous Location: San Francisco, Current Location: Seattle, Phone: 5551234567
-Name: James Wilson, Age: 50, Previous Location: Boston, Current Location: Austin, Phone: 
-Name: Olivia Martinez, Age: 19, Previous Location: Houston, Current Location: Dallas, Phone: 9998887777
-Name: Sophia Brown, Age: 35, Previous Location: Denver, Current Location: Portland, Phone: 1112223333
-Name: Liam Jones, Age: 28, Previous Location: Atlanta, Current Location: Nashville, Phone: 4445556666
-Name: Ava Taylor, Age: 42, Previous Location: San Diego, Current Location: Phoenix, Phone: 3336669999
-Name: Noah Clark, Age: 25, Previous Location: Philadelphia, Current Location: Washington, Phone: 7778889999
-Name: Mia Anderson, Age: 30, Previous Location: Detroit, Current Location: Minneapolis, Phone: 8887775555
+Name: Alice, Age: 25, Previous Location: New York, Current Coordinates: 40.7128 74.0060, Current Location: Manhattan, Phone: 555-1234
+Name: Bob, Age: 30, Previous Location: Chicago, Current Coordinates: 41.8781 87.6298, Current Location: Downtown, Phone: 555-5678
+Name: Charlie, Age: 40, Previous Location: Los Angeles, Current Coordinates: 34.0522 118.2437, Current Location: Hollywood, Phone:
+Name: David, Age: 22, Previous Location: San Francisco, Current Coordinates: 37.7749 122.4194, Current Location: Bay Area, Phone: 555-9876
+Name: Emily, Age: 35, Previous Location: Seattle, Current Coordinates: 47.6062 122.3321, Current Location: Downtown, Phone: 555-4321
+Name: Fiona, Age: 28, Previous Location: Boston, Current Coordinates: 42.3601 71.0589, Current Location: Back Bay, Phone:
+Name: George, Age: 45, Previous Location: Miami, Current Coordinates: 25.7617 80.1918, Current Location: South Beach, Phone: 555-2468
+Name: Hannah, Age: 20, Previous Location: Atlanta, Current Coordinates: 33.7490 84.3880, Current Location: Downtown, Phone:
+Name: Isaac, Age: 38, Previous Location: Dallas, Current Coordinates: 32.7767 96.7970, Current Location: Uptown, Phone: 555-1357

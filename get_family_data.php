@@ -1,27 +1,38 @@
 <?php
-// Read data from data.txt file
+
+// Read data from "data.txt" file
 $lines = file("data.txt", FILE_IGNORE_NEW_LINES);
 
+// Initialize an array to store family data
 $familyData = [];
 
-// Process each line and parse data
+// Iterate through each line in the file
 foreach ($lines as $line) {
+    // Initialize an associative array to store person data
     $personData = [];
-    preg_match_all('/([^:]+): ([^,]+)/', $line, $matches);
-    $personData['name'] = $matches[2][0];
-    $personData['age'] = $matches[2][1];
-    $personData['previous_location'] = $matches[2][2];
-    $personData['current_location'] = $matches[2][3];
-    // Check if phone number exists in the line
-    if (isset($matches[2][4])) {
-        $personData['phone'] = $matches[2][4];
-    } else {
-        $personData['phone'] = ''; // Set empty string if phone number doesn't exist
-    }
+    
+    // Use regular expression to parse the line and extract data
+    preg_match_all('/([^,]+): (.+?)(?:, |$)/', $line, $matches);
+    
+    // Store parsed data in the personData array
+    $personData['name'] = $matches[2][0] ?? ''; // Use null coalescing operator to handle undefined array key
+    $personData['age'] = $matches[2][1] ?? ''; // Use null coalescing operator to handle undefined array key
+    $personData['previous_location'] = $matches[2][2] ?? ''; // Use null coalescing operator to handle undefined array key
+    
+    // Extract current coordinates as a single string (latitude,longitude)
+    $coordinates = $matches[2][3] ?? '';
+    $personData['current_coordinates'] = $coordinates; // Store coordinates as a single string
+    
+    $personData['current_location'] = $matches[2][4] ?? ''; // Use null coalescing operator to handle undefined array key
+    $personData['phone'] = $matches[2][5] ?? ''; // Use null coalescing operator to handle undefined array key
+
+    // Add person data to familyData array
     $familyData[] = $personData;
 }
 
-// Output family data as JSON
+// Set response header to indicate JSON content type
 header('Content-Type: application/json');
+
+// Encode family data array to JSON format and output it
 echo json_encode($familyData);
 ?>

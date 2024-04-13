@@ -4,39 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Family</title>
-    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center mb-4">Search Family</h1>
-        <!-- Search Bar -->
         <div class="max-w-lg mx-auto mb-4">
             <input type="text" id="searchInput" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none" placeholder="Search by name or place">
         </div>
-        <!-- Family Cards -->
         <div id="familyCards" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
     </div>
-
-    <!-- JavaScript for searching and displaying family cards -->
     <script>
-        // Function to fetch and display family cards
         function displayFamilyCards() {
-            // Get search query
             var searchQuery = document.getElementById("searchInput").value.toLowerCase();
-
-            // Fetch data from PHP script
             fetch("get_family_data.php")
                 .then(response => response.json())
                 .then(data => {
-                    // Filter data based on search query
                     var filteredData = data.filter(person => {
                         return person.name.toLowerCase().includes(searchQuery) || person.previous_location.toLowerCase().includes(searchQuery) || person.current_location.toLowerCase().includes(searchQuery);
                     });
 
-                    // Display family cards
                     var familyCardsContainer = document.getElementById("familyCards");
-                    familyCardsContainer.innerHTML = ""; // Clear previous cards
+                    familyCardsContainer.innerHTML = ""; 
 
                     filteredData.forEach(person => {
                         var card = document.createElement("div");
@@ -46,7 +35,8 @@
                             <p><strong>Age:</strong> ${person.age}</p>
                             <p><strong>Previous Location:</strong> ${person.previous_location}</p>
                             <p><strong>Current Location:</strong> ${person.current_location}</p>
-                            <p><strong>Phone Number:</strong> ${person.phone || 'Not provided'}</p> <!-- Include phone number or 'Not provided' -->
+                            <p><strong>Current Coordinates:</strong> ${person.current_coordinates || 'Not provided'}</p>
+                            <p><strong>Phone Number:</strong> ${person.phone || 'Not provided'}</p>
                         `;
                         familyCardsContainer.appendChild(card);
                     });
@@ -54,10 +44,8 @@
                 .catch(error => console.error("Error fetching family data:", error));
         }
 
-        // Call displayFamilyCards function when the page loads
         window.onload = displayFamilyCards;
 
-        // Add event listener to search input
         document.getElementById("searchInput").addEventListener("input", displayFamilyCards);
     </script>
 </body>
