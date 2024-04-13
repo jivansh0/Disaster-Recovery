@@ -1,0 +1,10 @@
+Name: Alice Johnson, Age: 32, Previous Location: New York, Current Location: Los Angeles, Phone: 1234567890
+Name: Bob Smith, Age: 45, Previous Location: Chicago, Current Location: Miami, Phone: 9876543210
+Name: Emma Davis, Age: 27, Previous Location: San Francisco, Current Location: Seattle, Phone: 5551234567
+Name: James Wilson, Age: 50, Previous Location: Boston, Current Location: Austin, Phone: 
+Name: Olivia Martinez, Age: 19, Previous Location: Houston, Current Location: Dallas, Phone: 9998887777
+Name: Sophia Brown, Age: 35, Previous Location: Denver, Current Location: Portland, Phone: 1112223333
+Name: Liam Jones, Age: 28, Previous Location: Atlanta, Current Location: Nashville, Phone: 4445556666
+Name: Ava Taylor, Age: 42, Previous Location: San Diego, Current Location: Phoenix, Phone: 3336669999
+Name: Noah Clark, Age: 25, Previous Location: Philadelphia, Current Location: Washington, Phone: 7778889999
+Name: Mia Anderson, Age: 30, Previous Location: Detroit, Current Location: Minneapolis, Phone: 8887775555
